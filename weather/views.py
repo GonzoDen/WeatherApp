@@ -7,25 +7,27 @@ import requests, json
 def index(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
+
+    # LONDON
+    # TODO API for city-> lat, lon
     lat = 51.5085
     lon = -0.1257
-    url = f'https://api.openweathermap.org/data/2.5/weather?units=metrics&&lat={lat}&lon={lon}&appid={API_KEY}'
+    CITY = "London"
+    url = "https://api.openweathermap.org/data/2.5/weather?lat={}&units=metric&lon={}&appid={}"
 
-    city = 'London'
-    respon = requests.get(url.format(lat, lon)).json()
-    rest = requests.get(url.format(city))
-    print(rest.text)
+    response = requests.get(url.format(lat, lon, API_KEY)).json()
 
     city_info = {
-        'city': city,
-        'temp': res['main']['temp'],
-        'icon': res["weather"][0]["icon"]
+        'city': CITY,
+        'temp': response['main']['temp'],
+        'icon': response["weather"][0]["icon"]
     }
 
     context = {
         'info': city_info
     }
-    return render(request, 'weather/index.html')
+
+    return render(request, 'weather/index.html', context)
 
 
 def about(request):
