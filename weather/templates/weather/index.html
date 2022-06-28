@@ -6,9 +6,11 @@
     <div class="row">
         <div class="col-5 offset-1">
             <h1>Ur city</h1>
-            <form action="">
+            <form action="" method="post">
+                {%  csrf_token %}
                 <label for="city">city</label>
-                <input type="text" id="city" class="form-control" name="city" placeholder="type city">
+                {{ form.name }}
+                <input type="submit" name="send" value="show" class="mt-2 btn btn-danger">
             </form>
         </div>
 

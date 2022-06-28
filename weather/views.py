@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests, json
 from .models import City
+from .forms import CityForm
 
 
 def index(request):
@@ -12,8 +13,13 @@ def index(request):
     url_latlon = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid={}"
     url = "https://api.openweathermap.org/data/2.5/weather?lat={}&units=metric&lon={}&appid={}"
 
-    cities = City.objects.all()
+    if(request.method == 'POST'):
+        form = CityForm(request.POST)
+        form.save()
 
+    form = CityForm() #clean the form
+
+    cities = City.objects.all()
     all_cities = []
 
     for city in cities:
@@ -33,7 +39,8 @@ def index(request):
         all_cities.append(city_info)
 
     context = {
-        'all_info': all_cities
+        'all_info': all_cities,
+        'form' : form
     }
 
     return render(request, 'weather/index.html', context)
