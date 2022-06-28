@@ -14,8 +14,11 @@
 
         <div class="col-4 offset-1">
             <h1>other cities</h1>
+
+            {% for info in all_info %}
             <b>City:</b>{{info.city}}<br>
-            <b>t:</b>  {{ info.temp}}<br>
+            <b>t:</b>  {{info.temp}}<br>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
